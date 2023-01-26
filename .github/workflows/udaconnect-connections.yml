@@ -26,6 +26,6 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           context: .
-          file: /modules/api/Dockerfile
+          file: ./modules/api/Dockerfile
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/udaconnect-api:latest
