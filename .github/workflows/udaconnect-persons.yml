@@ -25,7 +25,7 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v3
         with:
-          context: .
+          context: ./modules/persons_api/
           file: ./modules/persons_api/Dockerfile
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/udaconnect-persons:latest
