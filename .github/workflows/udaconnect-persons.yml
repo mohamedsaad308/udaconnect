@@ -3,7 +3,7 @@ name: UdaConnect - Persons Service
 on:
   push:
     branches:
-      - "master"
+      - "main"
 
 jobs:
   build:
