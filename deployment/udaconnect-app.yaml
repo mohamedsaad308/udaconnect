@@ -34,6 +34,17 @@ spec:
         - image: mohamedsaad308/udaconnect-app:latest
           name: udaconnect-app
           imagePullPolicy: Always
+          env:
+            - name: PERSONS_API
+              valueFrom:
+                configMapKeyRef:
+                  name: endpoints-env
+                  key: PERSONS_API
+            - name: CONNECTIONS_API
+              valueFrom:
+                configMapKeyRef:
+                  name: endpoints-env
+                  key: CONNECTIONS_API
           resources:
             requests:
               memory: "128Mi"
