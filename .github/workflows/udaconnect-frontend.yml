@@ -3,7 +3,7 @@ name: UdaConnect - Frontend Service
 on:
   push:
     branches:
-      - "master"
+      - "main"
 
 jobs:
   build:
