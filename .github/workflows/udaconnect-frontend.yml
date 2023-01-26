@@ -1,4 +1,4 @@
-name: UdaConnect - Package with Docker
+name: UdaConnect - Locations Service
 
 on:
   push:
@@ -26,6 +26,6 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           context: .
-          file: /modules/api/Dockerfile
+          file: /modules/frontend/Dockerfile
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/udaconnect-api:latest
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/udaconnect-app:latest
