@@ -1,15 +1,23 @@
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List
-
+import json
 from app import db
 from app.udaconnect.models import Location
 from app.udaconnect.schemas import LocationSchema
 from geoalchemy2.functions import ST_AsText, ST_Point
 from sqlalchemy.sql import text
-
+from kafka import KafkaProducer
 logging.basicConfig(level=logging.WARNING)
 logger = logging.getLogger("udaconnect-api")
+
+TOPIC_NAME = "locations"
+KAFKA_SERVER = "localhost:9092"
+
+producer = KafkaProducer(
+    bootstrap_servers=KAFKA_SERVER,
+    api_version=(0, 11, 15)
+)
 
 
 class LocationService:
@@ -32,13 +40,17 @@ class LocationService:
             logger.warning(
                 f"Unexpected data format in payload: {validation_results}")
             raise Exception(f"Invalid payload: {validation_results}")
+        location = json.dumps(location).encode()
+        producer.send(TOPIC_NAME, location)
+        producer.flush()
+        print("Sent to consumer")
 
-        new_location = Location()
-        new_location.person_id = location["person_id"]
-        new_location.creation_time = location["creation_time"]
-        new_location.coordinate = ST_Point(
-            location["latitude"], location["longitude"])
-        db.session.add(new_location)
-        db.session.commit()
+        # new_location = Location()
+        # new_location.person_id = location["person_id"]
+        # new_location.creation_time = location["creation_time"]
+        # new_location.coordinate = ST_Point(
+        #     location["latitude"], location["longitude"])
+        # db.session.add(new_location)
+        # db.session.commit()
 
-        return new_location
+        return location
