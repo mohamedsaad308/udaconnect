@@ -1,4 +1,4 @@
-name: UdaConnect - Locations Service
+name: UdaConnect - Consumer Service
 
 on:
   push:
@@ -25,7 +25,7 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v3
         with:
-          context: ./modules/locations_api/
-          file: ./modules/locations_api/Dockerfile
+          context: ./modules/
+          file: ./modules/consumer/Dockerfile
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/udaconnect-locations:latest
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/locations-consumer:latest
