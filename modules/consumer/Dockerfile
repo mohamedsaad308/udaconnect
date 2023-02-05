@@ -8,5 +8,5 @@ RUN pip install -r requirements.txt
 
 EXPOSE 5000
 
-COPY ../locations_api/app/ .
+COPY . .
 CMD ["python", "location_consumer.py"]
