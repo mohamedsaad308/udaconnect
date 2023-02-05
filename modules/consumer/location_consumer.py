@@ -7,8 +7,8 @@ from geoalchemy2.functions import ST_AsText, ST_Point
 TOPIC_NAME = "locations"
 consumer = KafkaConsumer(
     TOPIC_NAME,
-    # to deserialize kafka.producer.object into dict
     value_deserializer=lambda m: json.loads(m.decode('utf-8')),
+    bootstrap_servers=['kafka-service.kafka.svc.cluster.local:9092']
 )
 
 
