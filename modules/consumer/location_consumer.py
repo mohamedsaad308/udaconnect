@@ -6,7 +6,7 @@ from geoalchemy2.functions import ST_AsText, ST_Point
 import os
 
 TOPIC_NAME = "locations"
-KAFKA_SERVER = os.environ["KAFKA_SERVER"]
+KAFKA_SERVER = os.getenv("KAFKA_SERVER", default="localhost:9092")
 consumer = KafkaConsumer(
     TOPIC_NAME,
     value_deserializer=lambda m: json.loads(m.decode('utf-8')),
@@ -22,9 +22,11 @@ def write_location(location):
         location["latitude"], location["longitude"])
     db.session.add(new_location)
     db.session.commit()
+    db.session.close()
 
 
 with create_app().app_context():
     for location in consumer:
         location_data = location.value
+        print(location_data)
         write_location(location_data)

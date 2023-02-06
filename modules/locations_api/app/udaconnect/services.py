@@ -15,7 +15,7 @@ logging.basicConfig(level=logging.WARNING)
 logger = logging.getLogger("udaconnect-api")
 
 TOPIC_NAME = "locations"
-KAFKA_SERVER = os.environ["KAFKA_SERVER"]
+KAFKA_SERVER = os.getenv("KAFKA_SERVER", "localhost:9092")
 
 producer = KafkaProducer(
     bootstrap_servers=KAFKA_SERVER,
