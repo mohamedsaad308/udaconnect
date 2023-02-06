@@ -3,12 +3,14 @@ import json
 from app.udaconnect.models import Location
 from app import db, create_app
 from geoalchemy2.functions import ST_AsText, ST_Point
+import os
 
 TOPIC_NAME = "locations"
+KAFKA_SERVER = os.environ["KAFKA_SERVER"]
 consumer = KafkaConsumer(
     TOPIC_NAME,
     value_deserializer=lambda m: json.loads(m.decode('utf-8')),
-    bootstrap_servers=['kafka-service.kafka.svc.cluster.local:9092']
+    bootstrap_servers=[KAFKA_SERVER]
 )
 
 

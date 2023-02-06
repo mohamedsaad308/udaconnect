@@ -8,11 +8,14 @@ from app.udaconnect.schemas import LocationSchema
 from geoalchemy2.functions import ST_AsText, ST_Point
 from sqlalchemy.sql import text
 from kafka import KafkaProducer
+import os
+
+
 logging.basicConfig(level=logging.WARNING)
 logger = logging.getLogger("udaconnect-api")
 
 TOPIC_NAME = "locations"
-KAFKA_SERVER = "kafka-service.kafka.svc.cluster.local:9092"
+KAFKA_SERVER = os.environ["KAFKA_SERVER"]
 
 producer = KafkaProducer(
     bootstrap_servers=KAFKA_SERVER,
