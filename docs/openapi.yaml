@@ -1,0 +1,173 @@
+openapi: 3.0.0
+info:
+  description: API for Connecting peope with common interests.
+  version: "1.0.0"
+  title: Connections API
+paths:
+  /api/persons:
+    get:
+      summary: Retrieves all people
+      operationId: getPeople
+      description: Retrieves all the people that have been added.
+      responses:
+        "200":
+          description: All people
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/PersonRecord"
+        "400":
+          description: Bad input parameter
+    post:
+      summary: Adds a person
+      operationId: addPerson
+      description: Creates new person record.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PersonRecord"
+        description: A person record that was created
+      responses:
+        "200":
+          description: Person record created successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PersonRecord"
+        "400":
+          description: "Invalid input, object invalid"
+  /api/locations:
+    get:
+      summary: Retrieves all available locations
+      operationId: getLocation
+      description: Retrieves all the locations that have been added.
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Location"
+        "400":
+          description: Bad input parameter
+    post:
+      summary: Adds a location
+      operationId: addLocation
+      description: Creates location record.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Location"
+        description: A person record that was created
+      responses:
+        "200":
+          description: location record created successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Location"
+        "400":
+          description: "Invalid input, object invalid"
+  /api/persons/{userId}/connection:
+    get:
+      summary: Retrieves all parameters of current user.
+      operationId: getConnection
+      description: Retrieves all connections of this person.
+      parameters:
+        - in: path
+          name: userId
+          schema:
+            type: integer
+          required: true
+          description: Numeric ID of the user to get
+        - in: query
+          name: start_date
+          schema:
+            type: string
+          required: true
+          description: The start date of being at this location.
+        - in: query
+          name: end_date
+          schema:
+            type: string
+          required: true
+          description: The end date of being at this location
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Connection"
+        "400":
+          description: Bad input parameter
+components:
+  schemas:
+    PersonRecord:
+      type: object
+      required:
+        - id
+        - first_name
+        - last_name
+        - company_name
+      properties:
+        id:
+          type: integer
+          example: 1
+        first_name:
+          type: string
+          example: "Mo"
+        last_name:
+          type: string
+          example: "Saad"
+        company_name:
+          type: string
+          example: "Egypt Air"
+    Location:
+      type: object
+      required:
+        - id
+        - person_id
+        - longitude
+        - latitude
+        - creation_time
+      properties:
+        id:
+          type: integer
+          example: 1
+        person_id:
+          type: integer
+          example: 1
+        longitude:
+          type: string
+          example: "50985.545"
+        latitude:
+          type: string
+          example: "125986.3257"
+        creation_time:
+          type: string
+          format: date-time
+          example: "2016-08-29T09:12:33.001Z"
+    Connection:
+      type: object
+      properties:
+        person:
+          $ref: "#/components/schemas/PersonRecord"
+        location:
+          $ref: "#/components/schemas/Location"
+
+servers:
+  # Added by API Auto Mocking Plugin
+  # Added by API Auto Mocking Plugin
+  - description: SwaggerHub API Auto Mocking
+    url: https://virtserver.swaggerhub.com/MOHAMEDSAAD308_1/UdaconnectAPI/1.0.0
+  - description: SwaggerHub API Auto Mocking
+    url: https://virtserver.swaggerhub.com/MOHAMEDSAAD308_1/ComputersAPI/1.0.0

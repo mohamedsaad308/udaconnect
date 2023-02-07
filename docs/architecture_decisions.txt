@@ -2,10 +2,14 @@ Frontend Client
 This has 2 dependencies and 0 dependents. There are no downstream impacts so it could be a great area to start.
 
 
-People Route & Connection Route
-Based on my understanding of the application logic, both People and connection routes and their services are much more decoupled from the rest of the application. Changes are more isolated and not cross-service. They are less likely to impact other parts of the system
+People Route
+It has 2 dependencies and 0 dependents
+Based on my understanding of the application logic, both People  routes and its service are much more decoupled from the rest of the application. Changes are more isolated and not cross-service. They are less likely to impact other parts of the system
 
+Connection Route
+This has 1 dependencies and 1 dependents. it could be a good candidate to start.
 
 Location Route
 This has 1 dependency and 0 dependents. There are no downstream impacts so it could be a great area to start.
 
+I decided to use Kafka with the location service to handle the big amount of locations of the users sent in the background of the app every short while without making the user notice any delay.
