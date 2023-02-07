@@ -6,11 +6,11 @@ from geoalchemy2.functions import ST_AsText, ST_Point
 import os
 
 TOPIC_NAME = "locations"
-KAFKA_SERVER = os.getenv("KAFKA_SERVER", default="localhost:9092")
+KAFKA_SERVERS = os.getenv("KAFKA_SERVER", default="localhost:9092")
 consumer = KafkaConsumer(
     TOPIC_NAME,
     value_deserializer=lambda m: json.loads(m.decode('utf-8')),
-    bootstrap_servers=[KAFKA_SERVER]
+    bootstrap_servers=KAFKA_SERVERS.split(',')
 )
 
 

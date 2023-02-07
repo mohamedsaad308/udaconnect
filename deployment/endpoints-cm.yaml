@@ -4,6 +4,6 @@ data:
   PERSONS_API: "http://localhost:30002"
   CONNECTIONS_API: "http://localhost:30001"
   LOCATIONS_API: "http://localhost:30003"
-  KAFKA_SERVER: "kafka-service.kafka.svc.cluster.local:9092"
+  KAFKA_SERVERS: "kafka-1.kafka-svc.default.svc.cluster.local:9092,kafka-2.kafka-svc.default.svc.cluster.local:9092,kafka-3.kafka-svc.default.svc.cluster.local:9092"
 metadata:
   name: endpoints-env
