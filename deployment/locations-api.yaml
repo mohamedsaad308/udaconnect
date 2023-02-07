@@ -64,5 +64,5 @@ spec:
               valueFrom:
                 configMapKeyRef:
                   name: endpoints-env
-                  key: KAFKA_SERVER
+                  key: KAFKA_SERVERS
       restartPolicy: Always
