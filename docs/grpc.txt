@@ -1,8 +1,16 @@
-1. Open the grpc folder under modules.
-2. Rub the server using 
+#########################################################
+#             How to make a sample request				#
+#########################################################
 
-python3 main.py
 
-3. Run the writer file using 
-python3 writer.py 
-to create a new locatio instance
+1. Clone https://github.com/mohamedsaad308/udaconnect
+
+2. Install and run python 3.8
+
+3. Install the requirements found in `/udaconnect/modules/grpc/`
+
+`pip install -r requirements.txt`
+
+3. Go to `/udaconnect/modules/grpc` and Run writer.py
+
+`python3 writer.py`
