@@ -1,29 +1,43 @@
+import logging
 import time
 from concurrent import futures
-
+from json import dumps
 import grpc
 import location_pb2
 import location_pb2_grpc
+import os
+from kafka import KafkaProducer
 
 
-class LocationServicer(location_pb2_grpc.LocationServiceServicer):
+TOPIC_NAME = "locations"
+KAFKA_SERVERS = os.getenv("KAFKA_SERVER", "localhost:9092")
+
+producer = KafkaProducer(
+    bootstrap_servers=KAFKA_SERVERS.split(','),
+    api_version=(0, 11, 15),
+    value_serializer=lambda v: dumps(v).encode('utf-8')
+)
+
+
+class LocationService(location_pb2_grpc.LocationServiceServicer):
     def Create(self, request, context):
-        print("Received a message!")
-
-        request_value = {
-            "id": request.id,
+        print("received")
+        location = {
             "person_id": request.person_id,
-            "longitude": request.longitude,
             "latitude": request.latitude,
-            "creation_time": request.creation_time
+            "longitude": request.longitude
         }
-        print(request_value)
+        producer.send(TOPIC_NAME, location)
+        producer.flush()
+        return location_pb2.LocationMessage(**location)
 
-        return location_pb2.LocationMessage(**request_value)
+
+logging.basicConfig()
 
 # Initialize gRPC server
-server = grpc.server(futures.ThreadPoolExecutor(max_workers=2))
-location_pb2_grpc.add_LocationServiceServicer_to_server(LocationServicer(), server)
+server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
+location_pb2_grpc.add_LocationServiceServicer_to_server(
+    LocationService(), server)
 
 
 print("Server starting on port 5005...")

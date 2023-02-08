@@ -1,0 +1,43 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    service: grpc-producer
+  name: grpc-producer
+spec:
+  ports:
+    - name: "5005"
+      port: 5005
+      targetPort: 5005
+      nodePort: 30020
+  selector:
+    service: grpc-producer
+  type: NodePort
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    service: grpc-producer
+  name: grpc-producer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      service: grpc-producer
+  template:
+    metadata:
+      labels:
+        service: grpc-producer
+    spec:
+      containers:
+        - image: mohamedsaad308/grpc-producer:latest
+          name: grpc-producer
+          imagePullPolicy: Always
+          env:
+            - name: KAFKA_SERVER
+              valueFrom:
+                configMapKeyRef:
+                  name: endpoints-env
+                  key: KAFKA_SERVERS
+      restartPolicy: Always
