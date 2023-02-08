@@ -3,7 +3,7 @@ name: UdaConnect - Locations Service
 on:
   push:
     branches:
-      - "master"
+      - "main"
 
 jobs:
   build:

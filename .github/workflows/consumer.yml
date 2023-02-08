@@ -3,7 +3,7 @@ name: UdaConnect - Consumer Service
 on:
   push:
     branches:
-      - "master"
+      - "main"
 
 jobs:
   build:

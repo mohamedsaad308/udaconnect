@@ -3,7 +3,7 @@ name: UdaConnect - gRPC Location Producer
 on:
   push:
     branches:
-      - "master"
+      - "main"
 
 jobs:
   build:
