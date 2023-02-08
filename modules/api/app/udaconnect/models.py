@@ -3,7 +3,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from datetime import datetime
 
-from app import db  # noqa
+from app import db
 from geoalchemy2 import Geometry
 from geoalchemy2.shape import to_shape
 from shapely.geometry.point import Point
@@ -50,12 +50,12 @@ class Location(db.Model):
     @hybrid_property
     def longitude(self) -> str:
         coord_text = self.wkt_shape
-        return coord_text[coord_text.find(" ") + 1 : coord_text.find(")")]
+        return coord_text[coord_text.find(" ") + 1: coord_text.find(")")]
 
     @hybrid_property
     def latitude(self) -> str:
         coord_text = self.wkt_shape
-        return coord_text[coord_text.find("(") + 1 : coord_text.find(" ")]
+        return coord_text[coord_text.find("(") + 1: coord_text.find(" ")]
 
 
 @dataclass
