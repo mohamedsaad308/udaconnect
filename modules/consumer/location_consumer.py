@@ -17,7 +17,6 @@ consumer = KafkaConsumer(
 def write_location(location):
     new_location = Location()
     new_location.person_id = location["person_id"]
-    new_location.creation_time = location["creation_time"]
     new_location.coordinate = ST_Point(
         location["latitude"], location["longitude"])
     db.session.add(new_location)
