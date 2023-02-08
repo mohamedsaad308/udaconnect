@@ -27,5 +27,4 @@ def write_location(location):
 with create_app().app_context():
     for location in consumer:
         location_data = location.value
-        print(location_data)
         write_location(location_data)
